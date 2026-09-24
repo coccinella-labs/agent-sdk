@@ -21,7 +21,7 @@ pub mod tool_call;
 pub use agent::Agent;
 pub use error::Error;
 pub use provider::{ChatRequest, Message, ModelBackend, OllamaBackend, Provider, StaticBackend};
-pub use tool::{dispatch, Tool};
+pub use tool::{arg_object, arg_str, dispatch, Tool};
 pub use tool_call::{parse_tool_calls, ToolCall, ToolCallSource};
 
 /// Crate-wide result alias.
