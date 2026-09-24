@@ -28,7 +28,12 @@ pub enum Error {
     /// Dispatch received a tool call with no registered tool.
     #[error("unknown tool: {0}")]
     UnknownTool(String),
-    /// Container for anything else.
+    /// A tool received arguments that do not match its expected shape
+    /// (missing key, wrong JSON type, or non-object payload).
+    #[error("invalid arguments for tool `{tool}`: {message}")]
+    InvalidArguments { tool: String, message: String },
+    /// Container for anything else, including tool execution failures that
+    /// are not argument-shape problems.
     #[error("{0}")]
     Other(String),
 }

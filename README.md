@@ -25,17 +25,26 @@ stable Ollama request body (`model`, `messages`, `stream`). `ModelBackend`
 returns the raw assistant reply string so `parse_tool_calls` sees provider
 shapes unchanged.
 
+## Tools
+
+`Tool` is `name()` plus `run(&ToolCall) -> Result<String>`. Arguments are a
+`serde_json::Value`; results are plain UTF-8 strings the loop feeds back to
+the model. Use `arg_str` / `arg_object` for shape-checked reads (they return
+`Error::InvalidArguments`). `dispatch` matches by exact name (first match
+wins) and returns `Error::UnknownTool` when nothing matches; it does not
+validate argument shapes.
+
 ## Use
 
 ```rust
-use coccinella_agent_sdk::{Agent, Tool, ToolCall, Result};
+use coccinella_agent_sdk::{Agent, Tool, ToolCall, Result, arg_str};
 use serde_json::json;
 
 struct Greet;
 impl Tool for Greet {
     fn name(&self) -> &'static str { "greet" }
     fn run(&self, call: &ToolCall) -> Result<String> {
-        let who = call.arguments.get("name").and_then(|v| v.as_str()).unwrap_or("world");
+        let who = arg_str(call, "name").unwrap_or("world");
         Ok(format!("hello {who}"))
     }
 }
