@@ -1,0 +1,31 @@
+# Copyright 2026 coccinella-labs
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+[package]
+name = "coccinella-agent-sdk"
+version = "0.1.0-alpha.1"
+edition = "2021"
+rust-version = "1.85.0"
+authors = ["Coccinella Labs"]
+license = "MIT OR Apache-2.0"
+description = "Minimal reusable agent runtime: normalized ToolCall, provider abstraction, tool dispatch, and a tiny loop."
+repository = "https://github.com/coccinella-labs/agent-sdk"
+homepage = "https://github.com/coccinella-labs/agent-sdk"
+
+[dependencies]
+async-trait = "0.1"
+reqwest = { version = "0.12.20", features = ["json", "native-tls"] }
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.140"
+thiserror = "2"
+tokio = { version = "1.52", features = ["macros", "rt-multi-thread"] }
