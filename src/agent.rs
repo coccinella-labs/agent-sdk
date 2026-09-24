@@ -48,7 +48,11 @@ impl<'a> Agent<'a> {
 
     /// Create an agent whose parse source is derived from the backend
     /// provider (e.g. `Ollama` for a local daemon).
-    pub fn new(backend: &'a dyn ModelBackend, tools: Vec<Box<dyn Tool>>, max_rounds: usize) -> Self {
+    pub fn new(
+        backend: &'a dyn ModelBackend,
+        tools: Vec<Box<dyn Tool>>,
+        max_rounds: usize,
+    ) -> Self {
         let provider = backend.provider();
         let source = ToolCallSource::from_provider(&provider);
         Self::with_source(backend, tools, source, max_rounds)

@@ -20,7 +20,9 @@ pub enum Error {
     /// The raw reply could not be handled as a tool call or message.
     #[error("unparseable model reply: {0}")]
     Parse(String),
-    /// A model request failed at the transport or HTTP layer.
+    /// A model request failed at the transport layer or returned a non-2xx
+    /// HTTP status. The payload includes the request URL and, for HTTP
+    /// failures, `HTTP <status>`.
     #[error("model request failed: {0}")]
     Http(String),
     /// Dispatch received a tool call with no registered tool.
