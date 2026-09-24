@@ -12,6 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//! Minimal reusable agent runtime: tool-call parsing, provider backends,
+//! tool dispatch, and a tiny fixed-budget loop.
+//!
+//! # v0.1 API surface
+//!
+//! Import from the crate root. The modules below stay public for qualified
+//! paths; the root re-exports are the intended surface.
+//!
+//! | Area | Types |
+//! | --- | --- |
+//! | Loop | [`Agent`] |
+//! | Tool calls | [`ToolCall`], [`ToolCallSource`], [`parse_tool_calls`] |
+//! | Tools | [`Tool`], [`dispatch`], [`arg_str`], [`arg_object`] |
+//! | Backends | [`ModelBackend`], [`StaticBackend`], [`OllamaBackend`], [`ChatRequest`] |
+//! | Wire types | [`Message`], [`Provider`] |
+//! | Errors | [`Error`], [`Result`] |
+//!
+//! # Adopt
+//!
+//! 1. Implement [`Tool`] for each tool the model may call.
+//! 2. Pick a [`ModelBackend`]: [`StaticBackend`] (offline, scripted) or
+//!    [`OllamaBackend`] (local HTTP daemon).
+//! 3. Build an [`Agent`] and call [`Agent::run`].
+//! 4. Branch on [`Error`] when `run` returns `Err`.
+//!
+//! A complete offline walkthrough lives in `examples/basic_agent.rs` and in
+//! the crate README.
+//!
+//! # Stability
+//!
+//! v0.1 freezes the table above, the `Message` wire shape
+//! (`{ "role", "content" }`), the `ChatRequest` Ollama body, and the
+//! contracts documented on [`Agent`], [`Tool`], [`ModelBackend`], and
+//! [`Error`]. Parser edge cases and `pub(crate)` helpers may change without
+//! a major bump.
+
 pub mod agent;
 pub mod error;
 pub mod provider;
