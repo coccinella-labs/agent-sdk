@@ -68,9 +68,6 @@ mod tests {
             arguments: json!({}),
             source: ToolCallSource::OpenAi,
         };
-        assert!(matches!(
-            dispatch(&call, &[]),
-            Err(Error::UnknownTool(_))
-        ));
+        assert!(matches!(dispatch(&call, &[]), Err(Error::UnknownTool(_))));
     }
 }

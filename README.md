@@ -10,6 +10,21 @@ Minimal reusable agent runtime extracted from stable Harper boundaries:
 
 Status: spike (`0.1.0-alpha.1`). Not production-ready.
 
+## Backends
+
+Two `ModelBackend` implementations ship with the crate. Pick by whether you
+need a real model or a deterministic script.
+
+| Backend | Network | Purpose |
+| --- | --- | --- |
+| `StaticBackend` | none | Deterministic replies for tests, examples, and offline demos. Each `chat` pops the next scripted reply; the last repeats. An empty script yields `Ok("")`. |
+| `OllamaBackend` | local HTTP | Talks to an Ollama daemon at `POST {base}/api/chat` with `stream: false`. Non-2xx responses become `Error::Http` with the URL and status. |
+
+`Message` is the stable wire type (`role` + `content`). `ChatRequest` is the
+stable Ollama request body (`model`, `messages`, `stream`). `ModelBackend`
+returns the raw assistant reply string so `parse_tool_calls` sees provider
+shapes unchanged.
+
 ## Use
 
 ```rust
@@ -29,7 +44,7 @@ impl Tool for Greet {
 ## Example
 
 ```bash
-cargo run --example basic_agent          # offline, scripted backend
+cargo run --example basic_agent          # offline, StaticBackend
 OLLAMA_BASE_URL=http://localhost:11434 OLLAMA_MODEL=llama3 cargo run --example basic_agent
 ```
 
