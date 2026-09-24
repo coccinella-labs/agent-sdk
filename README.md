@@ -9,21 +9,19 @@ Minimal reusable agent runtime extracted from stable Harper boundaries:
 - `Error` / `Result` types for every failure path.
 
 Status: alpha (`0.1.0-alpha.1`). The v0.1 surface below is the adoption
-target; parser edge cases may still change.
+target; parser edge cases may still change. Not tagged or published as
+`0.1.0` yet; see `CHANGELOG.md` for the release decision.
 
 ## Install
 
-```toml
-[dependencies]
-coccinella-agent-sdk = "0.1.0-alpha.1"
-```
-
-Git pin until crates.io publish:
+Git pin (the supported install path until crates.io publish):
 
 ```toml
 [dependencies]
-coccinella-agent-sdk = { git = "https://github.com/coccinella-labs/agent-sdk" }
+coccinella-agent-sdk = { git = "https://github.com/coccinella-labs/agent-sdk", rev = "<commit>" }
 ```
+
+crates.io (`0.1.0` and later) is deferred; see `CHANGELOG.md`.
 
 ## Quick start
 
