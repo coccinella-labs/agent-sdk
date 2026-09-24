@@ -21,6 +21,9 @@ license = "MIT OR Apache-2.0"
 description = "Minimal reusable agent runtime: normalized ToolCall, provider abstraction, tool dispatch, and a tiny loop."
 repository = "https://github.com/coccinella-labs/agent-sdk"
 homepage = "https://github.com/coccinella-labs/agent-sdk"
+readme = "README.md"
+keywords = ["agent", "llm", "tool-call", "runtime"]
+categories = ["api-bindings", "development-tools"]
 
 [dependencies]
 async-trait = "0.1"
