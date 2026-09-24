@@ -25,6 +25,21 @@ stable Ollama request body (`model`, `messages`, `stream`). `ModelBackend`
 returns the raw assistant reply string so `parse_tool_calls` sees provider
 shapes unchanged.
 
+## Loop
+
+`Agent::run` is a fixed-budget tool loop (`max_rounds`, minimum 1):
+
+- A reply with zero tool calls is trimmed and returned as the final answer
+  (plain text and malformed JSON both take this path).
+- On the last round, tool outputs are not fed back; the return value is
+  `Reached max rounds (N); last tool outputs:` plus one line per call.
+- Unknown tools and tool errors become `[name] error: ...` in the tool
+  message; the loop continues so the model can recover.
+- Backend transport/HTTP failures propagate as `Err`.
+
+`run_command` calls are normalized before dispatch. Inspect `history()` for
+the user / assistant / tool turns after a run.
+
 ## Tools
 
 `Tool` is `name()` plus `run(&ToolCall) -> Result<String>`. Arguments are a
